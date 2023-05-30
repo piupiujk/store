@@ -26,7 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-DOMAIN_NAME = 'http://localhost:8000'
+DOMAIN_NAME = 'http://127.0.0.1:8000'
 
 # Application definition
 
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.humanize',
 
     'allauth',
     'allauth.account',
@@ -45,8 +46,11 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'debug_toolbar',
 
+    'django_celery_results',
+
     'products',
     'users',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -90,8 +94,8 @@ INTERNAL_IPS = [
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',
-        'OPTIONS' : {
+        'LOCATION': 'redis://127.0.0.1:6379',
+        'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient'
         }
     }
@@ -165,12 +169,12 @@ LOGOUT_REDIRECT_URL = '/'
 
 # Sending emails
 
-# EMAIL_HOST = 'smtp.yandex.com'
-# EMAIL_PORT = 465
-# EMAIL_HOST_USER = 'store-server.service@yandex.ru'
-# EMAIL_HOST_PASSWORD = 'bemunhtcwatczkna'
-# EMAIL_USE_SSL = True
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'store-server.service@yandex.ru'
+EMAIL_HOST_PASSWORD = 'bemunhtcwatczkna'
+EMAIL_USE_SSL = True
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # OAuth
 
@@ -188,3 +192,17 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
     }
 }
+
+# Celery
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+
+# Stripe
+
+
+# Stripe
+
+STRIPE_PUBLIC_KEY = 'pk_test_51NDDTwA4w5vEYR5cypCnJMnrS2hC4EgZg8QBcmZXkrxFRtPnBvZ1lm2aIXGG9alC52zS7LqQKivn7mjqY0WXrwcm003ISnILqP'
+STRIPE_SECRET_KEY = 'sk_test_51NDDTwA4w5vEYR5c0vSIOcZ1gFjEnwVNY5C87vnoJ2pWUNuD8Mo2sJzaRN8UFfgSQdJVL92jL99e5h3kbYu6taxe00t9V6gMTa'
+STRIPE_WEBHOOK_SECRET = 'whsec_709e727fa8558b05ea24062ca84666bad1ee0fe32ba6a45ac176f8fb7c29e135'
